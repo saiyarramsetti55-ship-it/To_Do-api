@@ -89,3 +89,21 @@ def complete_task(task_id: int):
         "message": "Task marked as completed",
         "task": tasks[task_id]
     }
+
+# DELETE — delete a task
+@app.delete("/tasks/{task_id}")
+def delete_task(task_id: int):
+
+    if task_id not in tasks:
+        raise HTTPException(
+            status_code=404,
+            detail="Task not found"
+        )
+
+    deleted_task = tasks.pop(task_id)
+
+    return {
+        "id": task_id,
+        "message": "Task deleted successfully",
+        "task": deleted_task
+    }
