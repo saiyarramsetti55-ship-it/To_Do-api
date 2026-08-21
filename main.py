@@ -71,3 +71,21 @@ def update_task(task_id: int, task: Task):
         "message": "Task updated successfully",
         "task": tasks[task_id]
     }
+
+# PATCH — mark a task as completed
+@app.patch("/tasks/{task_id}/complete")
+def complete_task(task_id: int):
+
+    if task_id not in tasks:
+        raise HTTPException(
+            status_code=404,
+            detail="Task not found"
+        )
+
+    tasks[task_id]["completed"] = True
+
+    return {
+        "id": task_id,
+        "message": "Task marked as completed",
+        "task": tasks[task_id]
+    }
