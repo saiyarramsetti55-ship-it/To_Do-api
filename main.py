@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 app = FastAPI(title="Todo Task Manager API")
@@ -36,6 +36,24 @@ def get_all_tasks():
         "tasks": tasks
     }
 
+
+
+# GET — get one task by ID
+@app.get("/tasks/{task_id}")
+def get_task(task_id: int):
+
+    if task_id not in tasks:
+        raise HTTPException(
+            status_code=404,
+            detail="Task not found"
+        )
+    
+    return {
+        "id": task_id,
+        "task": tasks[task_id]
+    }
+
+    
 @app.put("/tasks/{task_id}")
 def update_task(task_id: int, task: Task):
 
