@@ -25,8 +25,16 @@ def create_task(task: Task):
         "id": task_counter,
         "message": "Task created",
         "task": tasks[task_counter]
+    
     }
 
+# GET — get all tasks
+@app.get("/tasks")
+def get_all_tasks():
+    return {
+        "count": len(tasks),
+        "tasks": tasks
+    }
 
 @app.put("/tasks/{task_id}")
 def update_task(task_id: int, task: Task):
