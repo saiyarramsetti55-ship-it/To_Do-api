@@ -131,3 +131,22 @@ def get_tasks_by_priority(level: str):
         "count": len(filtered_tasks),
         "tasks": filtered_tasks
     }    
+
+
+# GET — get pending tasks
+@app.get("/tasks/status/pending")
+def get_pending_tasks():
+
+    pending_tasks = {
+        task_id: task
+        for task_id, task in tasks.items()
+        if task["completed"] is False
+    }
+
+    return {
+        "status": "pending",
+        "count": len(pending_tasks),
+        "tasks": pending_tasks
+    }
+
+
