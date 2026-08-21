@@ -107,3 +107,27 @@ def delete_task(task_id: int):
         "message": "Task deleted successfully",
         "task": deleted_task
     }
+
+
+
+# GET — get tasks by priority
+@app.get("/tasks/priority/{level}")
+def get_tasks_by_priority(level: str):
+
+    if level not in ["low", "medium", "high"]:
+        raise HTTPException(
+            status_code=400,
+            detail="Priority must be low, medium, or high"
+        )
+
+    filtered_tasks = {
+        task_id: task
+        for task_id, task in tasks.items()
+        if task["priority"] == level
+    }
+
+    return {
+        "priority": level,
+        "count": len(filtered_tasks),
+        "tasks": filtered_tasks
+    }    
