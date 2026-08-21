@@ -72,6 +72,25 @@ def update_task(task_id: int, task: Task):
         "task": tasks[task_id]
     }
 
+
+# GET — search tasks by title
+@app.get("/tasks/search")
+def search_tasks(keyword: str):
+
+    matching_tasks = {
+        task_id: task
+        for task_id, task in tasks.items()
+        if keyword.lower() in task["title"].lower()
+    }
+
+    return {
+        "keyword": keyword,
+        "count": len(matching_tasks),
+        "tasks": matching_tasks
+    }
+
+
+
 # PATCH — mark a task as completed
 @app.patch("/tasks/{task_id}/complete")
 def complete_task(task_id: int):
@@ -90,9 +109,12 @@ def complete_task(task_id: int):
         "task": tasks[task_id]
     }
 
+
+
+
 # DELETE — delete a task
 @app.delete("/tasks/{task_id}")
-def delete_task(task_id: int):
+def delete_task(task_id: str):
 
     if task_id not in tasks:
         raise HTTPException(
@@ -148,5 +170,6 @@ def get_pending_tasks():
         "count": len(pending_tasks),
         "tasks": pending_tasks
     }
+
 
 
