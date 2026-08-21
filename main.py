@@ -36,6 +36,28 @@ def get_all_tasks():
         "tasks": tasks
     }
 
+# GET — task statistics
+@app.get("/tasks/stats")
+def get_task_stats():
+
+    total_tasks = len(tasks)
+
+    completed_tasks = sum(
+        1 for task in tasks.values()
+        if task["completed"] is True
+    )
+
+    pending_tasks = sum(
+        1 for task in tasks.values()
+        if task["completed"] is False
+    )
+
+    return {
+        "total_tasks": total_tasks,
+        "completed_tasks": completed_tasks,
+        "pending_tasks": pending_tasks
+    }
+ 
 
 
 # GET — get one task by ID
@@ -170,6 +192,5 @@ def get_pending_tasks():
         "count": len(pending_tasks),
         "tasks": pending_tasks
     }
-
 
 
