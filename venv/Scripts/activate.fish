@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV 'C:\Users\koppa\Desktop\21082026\To_Do-api\venv'
+set -gx VIRTUAL_ENV 'C:\Users\koppa\Desktop\To-Do--fastapi\To_Do-api\venv'
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"Scripts $PATH
